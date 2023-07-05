@@ -5,6 +5,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # build
+cd ..
 cp entry_point/lambda_function.py .
 
 # install dependencies
