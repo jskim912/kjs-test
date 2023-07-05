@@ -4,9 +4,6 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-# checkout
-git clone https://github.com/jskim912/kjs-test.git
-
 # build
 cp entry_point/lambda_function.py .
 
