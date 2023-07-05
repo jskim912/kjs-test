@@ -2,6 +2,7 @@
 cat << EOF > main.py
 from application import main
 
-def app(event, context):
-    main(event)
+def start(event, context):
+    result = main(event)
+    return result
 EOF

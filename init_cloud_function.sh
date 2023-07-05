@@ -2,6 +2,7 @@
 cat << EOF > main.py
 from application import main
 
-def app(request):
-    main(request.get_json())
+def start(request):
+    result = main(request.get_json())
+    return result
 EOF
