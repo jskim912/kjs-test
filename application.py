@@ -1,6 +1,11 @@
 import requests
 
-def main(event, context):
+def main(request_body: dict):
+    """_summary_
+
+    Args:
+        request_body (dict): reqeust 객체의 body dict
+    """
     print("This is Multi-Cloud Deployment Test.")
     print("#"*30)
 
