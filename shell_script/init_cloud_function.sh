@@ -5,7 +5,6 @@ if [ $# -lt 1 ]; then
 fi
 
 # build
-cd ..
 cp entry_point/main.py .
 
 # packaging
