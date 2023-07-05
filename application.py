@@ -1,4 +1,5 @@
 import requests
+import json
 
 def main(request_body: dict) -> json:
     """어플리케이션 main 함수
