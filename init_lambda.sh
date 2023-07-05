@@ -1,18 +1,27 @@
 #!/bin/bash
-cat << EOF > main.py
-from application import main
+if [ $# -lt 1 ]; then
+    echo "Usage: init_lambda.sh <function_name> <region>"
+    exit 1
+fi
 
-def start(event, context):
-    """Lambda 진입 함수
+# checkout
+git clone https://github.com/jskim912/kjs-test.git
 
-    Args:
-        event (dict): Lambda로 들어온 Request 객체 데이터
-        context (awslambdaric.lambda_context.LambdaContext) : Lambda Context
+# build
+cp entry_point/lambda_function.py .
 
-    Returns:
-        json: 파싱된 결과 데이터
-    """
+# install dependencies
+python3 -m venv venv
+source ./venv/bin/activate
+python3 -m pip install --upgrade pip
+pip3 install -r requirements.txt
 
-    result = main(event)
-    return result
-EOF
+# packaging
+cd ./venv/lib/python3.9/site-packages
+zip -r ../../../../package.zip .
+cd ../../../../
+zip -r package.zip application.py
+zip -r package.zip lambda_function.py
+
+# deployment
+aws lambda update-function-code --function-name $1 --zip-file package.zip --region ${2:-ap-northeast-2}
