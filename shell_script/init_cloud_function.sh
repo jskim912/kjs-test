@@ -13,4 +13,4 @@ mkdir package
 mv $(ls | grep -v -e package) package
 
 # deployment
-/Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --rigion=${2:-asia-northeast3} --source=package
+/Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --region=${2:-asia-northeast3} --source=package
