@@ -21,4 +21,4 @@ zip -r package.zip application.py
 zip -r package.zip lambda_function.py
 
 # deployment
-/usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file package.zip --region ${2:-ap-northeast-2}
+/usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
