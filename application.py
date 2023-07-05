@@ -9,7 +9,7 @@ def main(request_body: dict) -> json:
     Returns:
         json: AWS Lambda 또는 Google Cloud Function 진입 함수로 반환할 파싱된 데이터
     """
-    result = {}
+    result = request_body
 
     return result
 
