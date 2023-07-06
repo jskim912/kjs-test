@@ -8,7 +8,8 @@ fi
 
 CLOUD=${1:-AWS}
 FUNCTION=$2
-REGION=${3:-ap-northeast-2}
+AWS_REGION=${3:-ap-northeast-2}
+GCP_REGION=${3:-asia-northeast3}
 
 if [ $CLOUD == "AWS" ] 
 then
@@ -31,7 +32,7 @@ then
 
     # deployment
     # /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
-    /usr/local/bin/aws lambda create-function --function-name kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region ($REGION ap-northeast-1) --zip-file fileb://package.zip
+    /usr/local/bin/aws lambda create-function --function-name kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region $AWS_REGION --zip-file fileb://package.zip
 
 elif [ $CLOUD == "GCP" ]
 then
@@ -46,5 +47,6 @@ then
 
     # deployment
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
-    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --region=${2:-asia-northeast3} --source=package
+    #/Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --region=$GCP_REGION --source=package
+    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy kjst-testtest --trigger-http --runtime=python310 --region=$GCP_REGION --source=package
 fi
