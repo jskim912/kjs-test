@@ -6,9 +6,9 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-CLOUD = ${1:-AWS}
-FUNCTION = $2
-REGION = ${3:--ap-northeast-2}
+CLOUD=${1:-AWS}
+FUNCTION=$2
+REGION=${3:-ap-northeast-2}
 
 if [ $CLOUD -eq "AWS"]; then
     
