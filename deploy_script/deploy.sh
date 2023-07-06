@@ -22,14 +22,14 @@ then
     python3 -m pip install --upgrade pip
     pip3 install virtualenv
 
-    /opt/homebrew/bin/virtualenv venv -p /opt/homebrew/bin/python3
+    /opt/homebrew/bin/virtualenv venv -p /opt/homebrew/bin/python3.10
     #python3 -m venv venv
     source ./venv/bin/activate
     
     pip3 install -r requirements.txt
 
     # packaging
-    cd ./venv/lib/python3.9/site-packages
+    cd ./venv/lib/python3.10/site-packages
     zip -r ../../../../package.zip .
     cd ../../../../
     zip -r package.zip application.py
