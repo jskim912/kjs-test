@@ -36,7 +36,7 @@ then
     for i in {1..$DEPLOY_NUM}
     do
         str_num="00${i}"
-        num=${str_num:(-3)}
+        num="${str_num:(-3)}"
         /usr/local/bin/aws lambda create-function --function-name ${FUNCTION_NAME_PREFIX}_${num} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $AWS_REGION --zip-file fileb://package.zip
     done
 
