@@ -19,7 +19,7 @@ then
     cp entry_point/main_lambda.py .
 
     # install dependencies
-    python3 -m venv venv
+    python3 -m venv -p /opt/homebrew/bin/python3 venv
     source ./venv/bin/activate
     python3 -m pip install --upgrade pip
     pip3 install -r requirements.txt
@@ -37,8 +37,6 @@ then
     do
         str_num="00${i}"
         num="${str_num:(-3)}"
-        echo $str_num
-        echo $num
         /usr/local/bin/aws lambda create-function --function-name ${FUNCTION_NAME_PREFIX}_${num} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $AWS_REGION --zip-file fileb://package.zip
     done
 
