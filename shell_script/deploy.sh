@@ -48,5 +48,5 @@ then
     # deployment
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     #/Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --region=$GCP_REGION --source=package
-    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy kjst-testtest --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry_point=main.entry
+    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy kjst-testtest --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=main.entry
 fi
