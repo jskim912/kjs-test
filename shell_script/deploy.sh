@@ -1,10 +1,14 @@
 #!/bin/bash
 if [ $# -lt 1 ]; then
-    echo "Usage: deploy.sh <cloud_platform> <function_name> <region>"
+    echo "Usage: deploy.sh <cloud_platform> <function_name_prefix> <region>"
+    echo " ex1) deploy.sh AWS COUPANG_REVIEW [ap-northeast-2, ap-southeast-1]"
+    echo " ex2) deploy.sh GCP COUPANG_REVIEW [asia-northeast1, asia-northeast2, asia-northeast3]"
     exit 1
 fi
 
 CLOUD = ${1:-"AWS"}
+FUNCTION = $2
+
 if [ $CLOUD eq "AWS"]; then
     
     # build
