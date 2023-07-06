@@ -10,7 +10,7 @@ CLOUD=${1:-AWS}
 FUNCTION_NAME_PREFIX=$2
 AWS_REGION=${3:-ap-northeast-2}
 GCP_REGION=${3:-asia-northeast3}
-DEPLOY_NUM=2
+DEPLOY_NUM=1
 
 if [ $CLOUD == "AWS" ] 
 then
@@ -22,7 +22,7 @@ then
     python3 -m pip install --upgrade pip
     pip3 install virtualenv
 
-    virtualenv -p python3.10 venv 
+    virtualenv -p /opt/homebrew/bin/python3 venv 
     #python3 -m venv venv
     source ./venv/bin/activate
     
