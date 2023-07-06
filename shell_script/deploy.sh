@@ -10,7 +10,8 @@ CLOUD=${1:-AWS}
 FUNCTION=$2
 REGION=${3:-ap-northeast-2}
 
-if [ $CLOUD == "AWS"]; then
+if [ $CLOUD == "AWS" ] 
+then
     
     # build
     cp entry_point/lambda_function.py .
@@ -32,7 +33,8 @@ if [ $CLOUD == "AWS"]; then
     # /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
     /usr/local/bin/aws lambda create-function kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region $REGION
 
-elif [ $CLOUD == "GCP" ]; then
+elif [ $CLOUD == "GCP" ]
+then
 
     # build
     cp entry_point/main.py .
