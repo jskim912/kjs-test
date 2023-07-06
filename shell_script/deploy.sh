@@ -4,8 +4,8 @@ if [ $# -lt 1 ]; then
     exit 1
 fi
 
-
-if [ $1 eq "AWS"]; then
+CLOUD = ${1:-"AWS"}
+if [ $CLOUD eq "AWS"]; then
     
     # build
     cp entry_point/lambda_function.py .
@@ -26,7 +26,7 @@ if [ $1 eq "AWS"]; then
     # deployment
     /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
 
-elif [ $1 -eq "GCP" ]; then
+elif [ $CLOUD -eq "GCP" ]; then
 
     # build
     cp entry_point/main.py .
