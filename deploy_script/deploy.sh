@@ -33,7 +33,7 @@ then
 
     # deployment
     # /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
-    for ((i=1; i =< $DEPLOY_NUM; i++ ));
+    for ((i=1; i<$DEPLOY_NUM+1; i++ ));
     do
         str_num="00${i}"
         num="${str_num:(-3)}"
