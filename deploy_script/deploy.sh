@@ -22,7 +22,7 @@ then
     python3 -m pip install --upgrade pip
     pip3 install virtualenv
 
-    virtualenv venv --python=python3.10
+    virtualenv -p python3.10 venv 
     #python3 -m venv venv
     source ./venv/bin/activate
     
