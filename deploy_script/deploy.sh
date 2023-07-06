@@ -19,9 +19,13 @@ then
     cp entry_point/main_lambda.py .
 
     # install dependencies
-    python3 -m venv -p /opt/homebrew/bin/python3 venv
-    source ./venv/bin/activate
     python3 -m pip install --upgrade pip
+    pip3 install virtualenv
+
+    virtualenv venv --python=python3.10
+    #python3 -m venv venv
+    source ./venv/bin/activate
+    
     pip3 install -r requirements.txt
 
     # packaging
