@@ -22,7 +22,7 @@ then
     python3 -m pip install --upgrade pip
     pip3 install virtualenv
 
-    virtualenv venv -p python3.10
+    /opt/homebrew/bin/virtualenv venv -p python3.10
     #python3 -m venv venv
     source ./venv/bin/activate
     
