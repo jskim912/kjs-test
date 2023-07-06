@@ -31,7 +31,7 @@ then
 
     # deployment
     # /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
-    /usr/local/bin/aws lambda create-function --function-name kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region $REGION --zip-file fileb://package.zip
+    /usr/local/bin/aws lambda create-function --function-name kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region $REGION, ap-northeast-1 --zip-file fileb://package.zip
 
 elif [ $CLOUD == "GCP" ]
 then
