@@ -1,6 +1,6 @@
 from application import main
 
-def lambda_handler(event, context):
+def entry(event, context):
     """Lambda 진입 함수
 
     Args:

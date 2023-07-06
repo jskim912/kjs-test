@@ -7,7 +7,7 @@ if [ $# -lt 1 ]; then
 fi
 
 CLOUD=${1:-AWS}
-FUNCTION=$2
+FUNCTION_NAME_PREFIX=$2
 AWS_REGION=${3:-ap-northeast-2}
 GCP_REGION=${3:-asia-northeast3}
 
@@ -15,7 +15,7 @@ if [ $CLOUD == "AWS" ]
 then
     
     # build
-    cp entry_point/lambda_function.py .
+    cp entry_point/main_lambda.py .
 
     # install dependencies
     python3 -m venv venv
@@ -28,11 +28,11 @@ then
     zip -r ../../../../package.zip .
     cd ../../../../
     zip -r package.zip application.py
-    zip -r package.zip lambda_function.py
+    zip -r package.zip main_lambda.py
 
     # deployment
     # /usr/local/bin/aws lambda update-function-code --function-name $1 --zip-file fileb://package.zip --region ${2:-ap-northeast-2}
-    /usr/local/bin/aws lambda create-function --function-name kjs-testtest --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler lambda_function.lambda_handler --region $AWS_REGION --zip-file fileb://package.zip
+    /usr/local/bin/aws lambda create-function --function-name ${FUNCTION_NAME_PREFIX}_001 --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $AWS_REGION --zip-file fileb://package.zip
 
 elif [ $CLOUD == "GCP" ]
 then
@@ -46,7 +46,7 @@ then
     mv $(ls | grep -v -e package) package
 
     # deployment
-    /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     #/Users/jskim/google-cloud-sdk/bin/gcloud functions deploy $1 --trigger-http --runtime=python310 --region=$GCP_REGION --source=package
-    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy kjst-testtest --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
+    /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
+    /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNCTION_NAME_PREFIX}_001 --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
 fi
