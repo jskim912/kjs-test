@@ -14,31 +14,32 @@ do
     #####################################################################
     if [ $CLOUD == "AWS" ] 
     then
+
+        # init
+        cd workspace/aws
+        cp ../../requirements.txt .
+        cp ../../application.py .
+
+        # install dependencies
+        python3 -m pip install --upgrade pip
+        pip3 install virtualenv
+
+        /opt/homebrew/bin/virtualenv ./venv -p /opt/homebrew/bin/python3.10 # PATH 설정 필요
+        source ./venv/bin/activate
+        pip3 install -r requirements.txt
+
+        # packaging
+        cd ./venv/lib/python3.10/site-packages
+        zip -r ../../../../package.zip .
+        cd ../../../../
+        zip -r package.zip application.py
+        zip -r package.zip main_lambda.py
+
+        # deployment
+        # 서비스 역할 정책 필요
+        # 함수 네이밍은 뭐가 좋을지
         for REGION in "${AWS_REGION_LIST[@]}"
         do
-            # init
-            cd workspace/aws
-            cp ../../requirements.txt .
-            cp ../../application.py .
-
-            # install dependencies
-            python3 -m pip install --upgrade pip
-            pip3 install virtualenv
-
-            /opt/homebrew/bin/virtualenv ./venv -p /opt/homebrew/bin/python3.10 # PATH 설정 필요
-            source ./venv/bin/activate
-            pip3 install -r requirements.txt
-
-            # packaging
-            cd ./venv/lib/python3.10/site-packages
-            zip -r ../../../../package.zip .
-            cd ../../../../
-            zip -r package.zip application.py
-            zip -r package.zip main_lambda.py
-
-            # deployment
-            # 서비스 역할 정책 필요
-            # 함수 네이밍은 뭐가 좋을지
             /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $REGION --zip-file fileb://package.zip
         done
 
@@ -49,20 +50,20 @@ do
     elif [ $CLOUD == "GCP" ]
     then
 
+        # init
+        cd ../gcp
+        cp ../../requirements.txt .
+        cp ../../application.py .
+
+        # packaging
+        rm -rf package
+        mkdir package
+        mv $(ls | grep -v -e package) package
+
+        # deployment
+        # 서비스 계정 정책 필요
         for REGION in "${GCP_REGION_LIST[@]}"
         do
-            # init
-            cd ../gcp
-            cp ../../requirements.txt .
-            cp ../../application.py .
-
-            # packaging
-            rm -rf package
-            mkdir package
-            mv $(ls | grep -v -e package) package
-
-            # deployment
-            # 서비스 계정 정책 필요
             /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
             /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
         done
