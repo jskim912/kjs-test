@@ -7,14 +7,14 @@ AWS_REGION=${2:-ap-northeast-2}
 GCP_REGION=${2:-asia-northeast3}
 
 
-for CLOUD in $CLOUD_LIST[@]
+for CLOUD in "${$CLOUD_LIST[@]}"
 do
     #####################################################################
     # AWS Lambda
     #####################################################################
     if [ $CLOUD == "AWS" ] 
     then
-        for REGION in $AWS_REGION_LIST[@]
+        for REGION in "${AWS_REGION_LIST[@]}"
         do
             # init
             cd workspace/aws
@@ -49,7 +49,7 @@ do
     elif [ $CLOUD == "GCP" ]
     then
 
-        for REGION in $GCP_REGION_LIST[@]
+        for REGION in "${GCP_REGION_LIST[@]}"
         do
             # init
             cd workspace/gcp
