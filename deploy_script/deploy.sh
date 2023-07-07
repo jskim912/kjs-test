@@ -38,6 +38,7 @@ do
         # 함수 네이밍은 뭐가 좋을지
         ## 고려사항
         ## - 기존에 동일한 함수명을 가진 함수가 있을 때
+        ##   lambda는 에러를 반환. 함수 존재 여부 판단 후 있으면 코드만 배포하는 로직이 필요??
         ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
         ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
         for AWS_REGION in "${AWS_REGION_LIST[@]}"
@@ -66,6 +67,10 @@ do
         # deployment
         # 서비스 계정 정책 필요
         # 동일하게 함수 네이밍 문제
+        ## 고려사항
+        ## - 기존에 동일한 함수명을 가진 함수가 있을 때
+        ##   cloud function은 함수가 존재하면 versionId만 올려서 알아서 덮어쓰기 배포하는 듯 
+        ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
         for GCP_REGION in "${GCP_REGION_LIST[@]}"
         do
             REGION=${2:-asia-northeast3}
