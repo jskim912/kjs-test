@@ -3,8 +3,6 @@
 CLOUD_LIST=(AWS GCP)
 AWS_REGION_LIST=(ap-northeast-1 ap-northeast-2)
 GCP_REGION_LIST=(asia-northeast1 asia-northeast2 asia-northeast3)
-AWS_REGION=${2:-ap-northeast-2}
-GCP_REGION=${2:-asia-northeast3}
 
 
 for CLOUD in "${CLOUD_LIST[@]}"
@@ -38,8 +36,13 @@ do
         # deployment
         # 서비스 역할 정책 필요
         # 함수 네이밍은 뭐가 좋을지
-        for REGION in "${AWS_REGION_LIST[@]}"
+        ## 고려사항
+        ## - 기존에 동일한 함수명을 가진 함수가 있을 때
+        ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
+        ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
+        for AWS_REGION in "${AWS_REGION_LIST[@]}"
         do
+            REGION=${AWS_REGION:-ap-northeast-2}
             /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $REGION --zip-file fileb://package.zip
         done
 
@@ -62,8 +65,10 @@ do
 
         # deployment
         # 서비스 계정 정책 필요
-        for REGION in "${GCP_REGION_LIST[@]}"
+        # 동일하게 함수 네이밍 문제
+        for GCP_REGION in "${GCP_REGION_LIST[@]}"
         do
+            REGION=${2:-asia-northeast3}
             /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
             /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
         done
