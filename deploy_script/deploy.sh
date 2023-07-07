@@ -1,8 +1,4 @@
 #!/bin/bash
-if [ $# -lt 1 ]; then
-    echo "Usage: deploy.sh"
-    exit 1
-fi
 
 CLOUD_LIST=(AWS GCP)
 AWS_REGION_LIST=(ap-northeast-1 ap-southeast-2)
