@@ -31,7 +31,7 @@ do
         zip -r ../../../../package.zip .
         cd ../../../../
         zip -r package.zip application.py
-        zip -r package.zip main_lambda.py
+        zip -r package.zip main.py
 
         # deployment
         # 서비스 역할 정책 필요
@@ -44,7 +44,7 @@ do
         for AWS_REGION in "${AWS_REGION_LIST[@]}"
         do
             REGION=${AWS_REGION:-ap-northeast-2}
-            /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main_lambda.entry --region $REGION --zip-file fileb://package.zip
+            /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
         done
 
 
@@ -71,10 +71,10 @@ do
         ## - 기존에 동일한 함수명을 가진 함수가 있을 때
         ##   cloud function은 함수가 존재하면 versionId만 올려서 알아서 덮어쓰기 배포하는 듯 
         ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
+        /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
         for GCP_REGION in "${GCP_REGION_LIST[@]}"
         do
             REGION=${GCP_REGION:-asia-northeast3}
-            /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
             /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
         done
 
