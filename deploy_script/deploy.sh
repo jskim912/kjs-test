@@ -16,17 +16,17 @@ do
     then
         for REGION in $AWS_REGION_LIST
         do
-            # build
-            cp entry_point/main_lambda.py .
+            # init
+            cd workspace/aws
+            cp ../../requirements.txt .
+            cp ../../application.py .
 
             # install dependencies
             python3 -m pip install --upgrade pip
             pip3 install virtualenv
 
-            # PATH 설정 필요
-            /opt/homebrew/bin/virtualenv venv -p /opt/homebrew/bin/python3.10 
+            /opt/homebrew/bin/virtualenv ./venv -p /opt/homebrew/bin/python3.10 # PATH 설정 필요
             source ./venv/bin/activate
-
             pip3 install -r requirements.txt
 
             # packaging
@@ -51,8 +51,10 @@ do
 
         for REGION in $GCP_REGION_LIST
         do
-            # build
-            cp entry_point/main.py .
+            # init
+            cd workspace/gcp
+            cp ../../requirements.txt .
+            cp ../../application.py .
 
             # packaging
             rm -rf package
@@ -60,6 +62,7 @@ do
             mv $(ls | grep -v -e package) package
 
             # deployment
+            # 서비스 계정 정책 필요
             /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
             /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
         done
