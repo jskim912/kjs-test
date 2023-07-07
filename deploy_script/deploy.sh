@@ -49,7 +49,7 @@ do
     elif [ $CLOUD == "GCP" ]
     then
 
-        for REGION in $AWS_REGION_LIST
+        for REGION in $GCP_REGION_LIST
         do
             # build
             cp entry_point/main.py .
