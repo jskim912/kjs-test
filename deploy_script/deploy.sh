@@ -52,7 +52,7 @@ do
         for REGION in "${GCP_REGION_LIST[@]}"
         do
             # init
-            cd workspace/gcp
+            cd ../gcp
             cp ../../requirements.txt .
             cp ../../application.py .
 
