@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CLOUD_LIST=(AWS GCP)
-AWS_REGION_LIST=(ap-northeast-1 ap-southeast-2)
+AWS_REGION_LIST=(ap-northeast-1 ap-northeast-2)
 GCP_REGION_LIST=(asia-northeast1 asia-northeast2 asia-northeast3)
 AWS_REGION=${2:-ap-northeast-2}
 GCP_REGION=${2:-asia-northeast3}
