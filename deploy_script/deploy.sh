@@ -73,7 +73,7 @@ do
         ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
         for GCP_REGION in "${GCP_REGION_LIST[@]}"
         do
-            REGION=${2:-asia-northeast3}
+            REGION=${GCP_REGION:-asia-northeast3}
             /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
             /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
         done
