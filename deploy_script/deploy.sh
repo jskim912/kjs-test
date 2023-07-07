@@ -7,7 +7,7 @@ AWS_REGION=${2:-ap-northeast-2}
 GCP_REGION=${2:-asia-northeast3}
 
 
-for CLOUD in "${$CLOUD_LIST[@]}"
+for CLOUD in "${CLOUD_LIST[@]}"
 do
     #####################################################################
     # AWS Lambda
