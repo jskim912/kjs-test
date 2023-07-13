@@ -40,7 +40,7 @@ function aws_lambda_deploy() {
     ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
     echo "2nd param : $AWS_REGION_LIST"
     IFS=","
-    AWS_REGION_LIST = ($AWS_REGION_LIST)
+    AWS_REGION_LIST = (echo $AWS_REGION_LIST)
     for i in $AWS_REGION_LIST
     do
         echo "Region: ${i}"
