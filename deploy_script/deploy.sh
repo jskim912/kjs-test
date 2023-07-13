@@ -85,7 +85,7 @@ do
     if [ $CLOUD == "AWS" ] 
     then
         IFS=","
-        AWS_REGION_LIST=(echo $2)
+        AWS_REGION_LIST=($2)
 
         aws_lambda_deploy $AWS_REGION_LIST
 
