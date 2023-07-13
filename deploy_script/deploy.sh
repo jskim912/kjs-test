@@ -9,6 +9,7 @@ CLOUD_LIST=$1
 
 
 function aws_lambda_deploy() {
+    echo "aws_lambda_deploy's region: ${1}"
     # init
     cd workspace/aws
     cp ../../requirements.txt .
@@ -82,7 +83,6 @@ do
     if [ $CLOUD == "AWS" ] 
     then
         AWS_REGION_LIST="(${2})"
-        echo $AWS_REGION_LIST
 
         aws_lambda_deploy $AWS_REGION_LIST
 
