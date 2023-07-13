@@ -9,7 +9,7 @@ CLOUD_LIST=$1
 
 
 function aws_lambda_deploy() {
-    echo "aws_lambda_deploy's region: ${AWS_REGION_LIST}"
+    
     # init
     cd workspace/aws
     cp ../../requirements.txt .
@@ -40,7 +40,9 @@ function aws_lambda_deploy() {
     ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
+        echo "aws_lambda_deploy's region: ${AWS_REGION_LIST[@]}"
         REGION=${AWS_REGION:-ap-northeast-2}
+        echo "Region: ${AWS_REGION}"
         /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
     done
 
