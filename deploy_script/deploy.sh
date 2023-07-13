@@ -9,7 +9,7 @@ CLOUD_LIST=$1
 
 
 function aws_lambda_deploy() {
-    echo "aws_lambda_deploy's region: ${1}"
+    echo "aws_lambda_deploy's region: ${AWS_REGION_LIST}"
     # init
     cd workspace/aws
     cp ../../requirements.txt .
