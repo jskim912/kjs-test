@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ $# -ne 1 ] then
+if [ $# -ne 2 ] 
+then
     echo "Usage: deploy.sh <cloud_platform_array> <region_array>"
 fi
 
