@@ -1,9 +1,14 @@
 #!/bin/bash
+IF [ $# -ne 1 ] then
+    echo "Usage: deploy.sh <cloud_platform_array> <region_array>"
+FI
 
-CLOUD_LIST=(AWS GCP)
-AWS_REGION_LIST=(ap-northeast-1 ap-northeast-2)
-GCP_REGION_LIST=(asia-northeast1 asia-northeast2 asia-northeast3)
 
+#CLOUD_LIST=(AWS GCP)
+#AWS_REGION_LIST=(ap-northeast-1 ap-northeast-2)
+#GCP_REGION_LIST=(asia-northeast1 asia-northeast2 asia-northeast3)
+
+CLOUD_LIST=$1
 
 for CLOUD in "${CLOUD_LIST[@]}"
 do
@@ -12,6 +17,7 @@ do
     #####################################################################
     if [ $CLOUD == "AWS" ] 
     then
+        AWS_REGION_LIST=$2
 
         # init
         cd workspace/aws
@@ -53,6 +59,7 @@ do
     #####################################################################
     elif [ $CLOUD == "GCP" ]
     then
+        GCP_REGION_LIST=$2
 
         # init
         cd ../gcp
