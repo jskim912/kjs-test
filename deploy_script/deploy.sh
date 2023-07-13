@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# -ne 2 ] 
+if [ $# -ne 1 ] 
 then
     echo "Usage: deploy.sh <cloud_platform_array> <region_array>"
 fi
@@ -82,6 +82,7 @@ do
     if [ $CLOUD == "AWS" ] 
     then
         AWS_REGION_LIST=$2
+        echo $AWS_REGION_LIST
 
         aws_lamda_deploy $AWS_REGION_LIST
 
