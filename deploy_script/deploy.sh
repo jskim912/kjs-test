@@ -38,11 +38,12 @@ function aws_lambda_deploy() {
     ##   lambda는 에러를 반환. 함수 존재 여부 판단 후 있으면 코드만 배포하는 로직이 필요?? (메서드가 다름)
     ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
     ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
+    echo "2nd param : ${2}"
     for i in $2
     do
         echo "Region: ${i}"
     done
-    
+
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         echo "aws_lambda_deploy's region: ${AWS_REGION_LIST[@]}"
