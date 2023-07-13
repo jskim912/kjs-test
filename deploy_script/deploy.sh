@@ -84,7 +84,7 @@ do
         AWS_REGION_LIST=$2
         echo $AWS_REGION_LIST
 
-        aws_lamda_deploy $AWS_REGION_LIST
+        aws_lambda_deploy $AWS_REGION_LIST
 
     #####################################################################
     # Google Cloud Function
