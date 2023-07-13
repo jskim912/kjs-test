@@ -1,7 +1,7 @@
 #!/bin/bash
-IF [ $# -ne 1 ] then
+if [ $# -ne 1 ] then
     echo "Usage: deploy.sh <cloud_platform_array> <region_array>"
-FI
+fi
 
 
 CLOUD_LIST=$1
