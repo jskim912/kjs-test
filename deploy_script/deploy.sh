@@ -39,7 +39,7 @@ function aws_lambda_deploy() {
     ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
     ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
     echo "2nd param : $AWS_REGION_LIST"
-    for i in $AWS_REGION_LIST[@]
+    for i in $AWS_REGION_LIST
     do
         echo "Region: ${i}"
     done
