@@ -55,6 +55,7 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     cd workspace/gcp
+    pwd
     cp ../../requirements.txt .
     cp ../../application.py .
 
@@ -84,7 +85,7 @@ do
     then 
         IFS=","
         AWS_REGION_LIST=($2)
-        
+
         aws_lambda_deploy $AWS_REGION_LIST
 
     #####################################################################
