@@ -34,20 +34,16 @@ function aws_lambda_deploy() {
 
     # deployment
     # 서비스 역할 정책 필요
-    # 함수 네이밍은 뭐가 좋을지
-    ## 고려사항
-    ## - 기존에 동일한 함수명을 가진 함수가 있을 때
-    ##   lambda는 에러를 반환. 함수 존재 여부 판단 후 있으면 코드만 배포하는 로직이 필요?? (메서드가 다름)
-    ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
+    IFS=","
+    AWS_REGION_LIST=($2)
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
-        echo "aws_lambda_deploy's region: ${AWS_REGION_LIST[@]}"
         REGION=${AWS_REGION:-ap-northeast-2}
-        echo "Region: ${AWS_REGION}"
-        /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
+        /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
     done
 
     cd ../..
+    pwd
 }
 
 function gcp_cloud_function_deploy() {
@@ -72,7 +68,7 @@ function gcp_cloud_function_deploy() {
     for GCP_REGION in "${GCP_REGION_LIST[@]}"
     do
         REGION=${GCP_REGION:-asia-northeast3}
-        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy test_${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
+        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
     done
 
     cd ../..
@@ -84,12 +80,8 @@ do
     # AWS Lambda
     #####################################################################
     if [ $CLOUD == "AWS" ] 
-    then
-        echo "2nd : $2"
-        IFS=","
-        AWS_REGION_LIST=($2)
-
-        aws_lambda_deploy $AWS_REGION_LIST
+    then 
+        aws_lambda_deploy
 
     #####################################################################
     # Google Cloud Function
