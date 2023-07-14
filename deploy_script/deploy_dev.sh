@@ -62,9 +62,10 @@ function gcp_cloud_function_deploy() {
     rm -rf package
     mkdir package
     pwd
-    ls -al
     echo $(ls | grep -v package)
-    mv $(ls | grep -v package) package
+    ls -al
+    
+    mv $(ls | grep -v package) ./package
     ls -al
     
 
