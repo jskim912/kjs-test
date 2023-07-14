@@ -50,7 +50,7 @@ function aws_lambda_deploy() {
             echo "createFunc : $createFunc"
         else
             echo 111111111111111111111111111111111
-        
+        fi
     done
 
     cd ../..
