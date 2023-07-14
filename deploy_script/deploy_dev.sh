@@ -36,14 +36,15 @@ function aws_lambda_deploy() {
     # 서비스 역할 정책 필요
     IFS=","
     AWS_REGION_LIST=($2)
+    echo "AWS_REGION_LIST = ${AWS_REGION_LIST}"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         REGION=${AWS_REGION:-ap-northeast-2}
+        echo "REGION = ${REGION}"
         /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
     done
 
     cd ../..
-    pwd
 }
 
 function gcp_cloud_function_deploy() {
