@@ -55,17 +55,16 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     cd workspace/gcp
-    pwd
     cp ../../requirements.txt .
     cp ../../application.py .
-    ls -al
 
     # packaging
     rm -rf package
     mkdir package
-    mv $(ls | grep -v -e package) package
     pwd
     ls -al
+    mv $(ls | grep -v package) package
+    
 
     # deployment
     # 서비스 계정 정책 필요
