@@ -39,12 +39,14 @@ function aws_lambda_deploy() {
     do
         REGION=${AWS_REGION:-ap-northeast-2}
         echo "REGION = ${REGION}"
+        # return을 담을 수 없어서 
+        existFunc=$(/usr/local/bin/aws lambda get-function --function-name ${FUNC_NAME}-${REGION} --region $REGION)
+        echo "existFunc : $existFunc"
         
-        #existFunc=/usr/local/bin/aws lambda get-function --function-name ${FUNC_NAME}-${REGION} --region $REGION
-        #echo "existFunc : $existFunc"
-        /usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip
-        /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
-        #echo "resp : $resp"
+        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip))
+        echo "updateFunc : $updateFunc"
+        createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
+        echo "createFunc : $createFunc"
     done
 
     cd ../..
