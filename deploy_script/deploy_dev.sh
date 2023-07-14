@@ -34,24 +34,18 @@ function aws_lambda_deploy() {
 
     # deployment
     # 서비스 역할 정책 필요
-    echo "AWS_REGION_LIST = ${AWS_REGION_LIST}"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         REGION=${AWS_REGION:-ap-northeast-2}
-        echo "REGION = ${REGION}"
-        
-        #existFunc=$(/usr/local/bin/aws lambda get-function --function-name ${FUNC_NAME}-${REGION} --region $REGION)
-        #echo "existFunc : $existFunc"
-        #aws lambda update-function-code --function-name data-collection-parser-dev-ap-northeast-2 --region ap-northeast-2 --zip-file fileb://package.zip 2> /dev/null
-
+    
         updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip 2> /dev/null)
 
         if [ -z "$updateFunc" ]
         then 
             createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
-            echo "createFunc : $createFunc"
+            echo "AWS Lambda Function created : $createFunc"
         else
-            echo $updateFunc
+            echo "AWS Lambda Function updated : $updateFunc"
         fi
     done
 
