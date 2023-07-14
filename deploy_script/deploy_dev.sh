@@ -65,11 +65,6 @@ function gcp_cloud_function_deploy() {
 
     # deployment
     # 서비스 계정 정책 필요
-    # 동일하게 함수 네이밍 문제
-    ## 고려사항
-    ## - 기존에 동일한 함수명을 가진 함수가 있을 때
-    ##   cloud function은 함수가 존재하면 versionId만 올려서 알아서 덮어쓰기 배포하는 듯 
-    ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     for GCP_REGION in "${GCP_REGION_LIST[@]}"
     do
@@ -96,7 +91,7 @@ do
     #####################################################################
     elif [ $CLOUD == "GCP" ]
     then
-        GCP_REGION_LIST=$2
+        GCP_REGION_LIST=($2)
 
         gcp_cloud_function_deploy $GCP_REGION_LIST
 
