@@ -64,6 +64,8 @@ function gcp_cloud_function_deploy() {
     rm -rf package
     mkdir package
     mv $(ls | grep -v -e package) package
+    pwd
+    ls -al
 
     # deployment
     # 서비스 계정 정책 필요
