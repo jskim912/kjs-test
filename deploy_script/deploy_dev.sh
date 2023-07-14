@@ -6,10 +6,12 @@ fi
 
 
 CLOUD_LIST=$1
+FUNC_NAME="data-collection-parser-dev"
+
+# prod vs dev
 
 
 function aws_lambda_deploy() {
-    
     # init
     cd workspace/aws
     cp ../../requirements.txt .
@@ -37,13 +39,12 @@ function aws_lambda_deploy() {
     ## - 기존에 동일한 함수명을 가진 함수가 있을 때
     ##   lambda는 에러를 반환. 함수 존재 여부 판단 후 있으면 코드만 배포하는 로직이 필요?? (메서드가 다름)
     ##   ex) An error occurred (ResourceConflictException) when calling the CreateFunction operation: Function already exist: test_ap-northeast-1
-    ## - meta_id를 받아서 함수명을 생성하는게 좋을지?
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         echo "aws_lambda_deploy's region: ${AWS_REGION_LIST[@]}"
         REGION=${AWS_REGION:-ap-northeast-2}
         echo "Region: ${AWS_REGION}"
-        /usr/local/bin/aws lambda create-function --function-name test_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
+        /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}_${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
     done
 
     cd ../..
