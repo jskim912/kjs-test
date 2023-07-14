@@ -39,7 +39,8 @@ function aws_lambda_deploy() {
     do
         REGION=${AWS_REGION:-ap-northeast-2}
         echo "REGION = ${REGION}"
-        /usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
+        #/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip
+        /usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip
     done
 
     cd ../..
