@@ -65,7 +65,7 @@ function gcp_cloud_function_deploy() {
     echo $(ls | grep -v package)
     ls -al
     
-    mv -v $(echo * | sed s:package::g) package
+    mv -v $(echo * | sed s:package::g) /Users/jskim/.jenkins/workspace/deploy/kjs-test/workspace/gcp/package
     ls -al
     
 
