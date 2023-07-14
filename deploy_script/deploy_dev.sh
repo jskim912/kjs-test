@@ -34,8 +34,6 @@ function aws_lambda_deploy() {
 
     # deployment
     # 서비스 역할 정책 필요
-    IFS=","
-    AWS_REGION_LIST=($2)
     echo "AWS_REGION_LIST = ${AWS_REGION_LIST}"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
@@ -82,7 +80,9 @@ do
     #####################################################################
     if [ $CLOUD == "AWS" ] 
     then 
-        aws_lambda_deploy
+        IFS=","
+        AWS_REGION_LIST=($2)
+        aws_lambda_deploy $AWS_REGION_LIST
 
     #####################################################################
     # Google Cloud Function
