@@ -43,9 +43,9 @@ function aws_lambda_deploy() {
         if [ -z "$updateFunc" ]
         then 
             createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
-            echo "AWS Lambda Function created : $createFunc"
+            echo "AWS Lambda Function created : \n$createFunc"
         else
-            echo "AWS Lambda Function updated : $updateFunc"
+            echo "AWS Lambda Function updated : \n$updateFunc"
         fi
     done
 
