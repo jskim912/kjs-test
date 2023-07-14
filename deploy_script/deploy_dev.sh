@@ -44,7 +44,7 @@ function aws_lambda_deploy() {
         #echo "existFunc : $existFunc"
         #aws lambda update-function-code --function-name data-collection-parser-dev-ap-northeast-2 --region ap-northeast-2 --zip-file fileb://package.zip 2> /dev/null
 
-        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip 2> /dev/null)
+        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip 2>&1 > /dev/null)
 
         if [ -z "$updateFunc" ]
         then 
