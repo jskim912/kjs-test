@@ -65,6 +65,7 @@ function gcp_cloud_function_deploy() {
     echo $(ls | grep -v package)
     ls -al
     
+    whoami
     mv -v $(ls | grep -v package) package
     ls -al
     
