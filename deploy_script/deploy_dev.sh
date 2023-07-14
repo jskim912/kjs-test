@@ -51,7 +51,7 @@ function aws_lambda_deploy() {
             createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
             echo "createFunc : $createFunc"
         else
-            echo 111111111111111111111111111111111
+            echo $updateFunc
         fi
     done
 
