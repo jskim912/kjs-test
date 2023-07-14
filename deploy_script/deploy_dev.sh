@@ -64,6 +64,7 @@ function gcp_cloud_function_deploy() {
     pwd
     ls -al
     mv $(ls | grep -v package) package
+    ls -al
     
 
     # deployment
