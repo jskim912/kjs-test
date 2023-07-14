@@ -66,7 +66,10 @@ function gcp_cloud_function_deploy() {
     ls -al
     
     whoami
-    mv -v $(echo $(ls | grep -v package)) package
+    mv application.py package
+    mv requirements.txt package
+    mv main.py package
+    #mv -v $(echo $(ls | grep -v package)) package
     ls -al
     
 
