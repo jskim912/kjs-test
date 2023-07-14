@@ -84,6 +84,7 @@ do
     then 
         IFS=","
         AWS_REGION_LIST=($2)
+        
         aws_lambda_deploy $AWS_REGION_LIST
 
     #####################################################################
@@ -91,6 +92,7 @@ do
     #####################################################################
     elif [ $CLOUD == "GCP" ]
     then
+        IFS=","
         GCP_REGION_LIST=($2)
 
         gcp_cloud_function_deploy $GCP_REGION_LIST
