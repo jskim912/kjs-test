@@ -58,6 +58,7 @@ function gcp_cloud_function_deploy() {
     pwd
     cp ../../requirements.txt .
     cp ../../application.py .
+    ls -al
 
     # packaging
     rm -rf package
