@@ -58,6 +58,7 @@ function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
     find . \
+        -maxdepth 1 \
         ! -name . \
         ! -name deploy_script \
         ! -name workspace \
