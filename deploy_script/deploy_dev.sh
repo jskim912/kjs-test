@@ -68,6 +68,7 @@ function gcp_cloud_function_deploy() {
         ! -name .git \
         -exec cp -rv '{}' workspace/gcp/package \;
     cd workspace/gcp
+    mv main.py package
     #cp ../../requirements.txt .
     #cp ../../application.py .
 
