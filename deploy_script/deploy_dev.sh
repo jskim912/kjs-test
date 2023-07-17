@@ -57,6 +57,7 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
+    mkdir workspace/gcp/package
     find . \
         -maxdepth 1 \
         ! -name . \
@@ -65,7 +66,7 @@ function gcp_cloud_function_deploy() {
         ! -name .gitignore \
         ! -name README.md \
         ! -name .git \
-        -exec cp -r '{}' workspace/gcp/package \;
+        -exec cp -rv '{}' workspace/gcp/package \;
     cd workspace/gcp
     #cp ../../requirements.txt .
     #cp ../../application.py .
