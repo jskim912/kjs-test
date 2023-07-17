@@ -93,12 +93,12 @@ function gcp_cloud_function_deploy() {
     # deployment
     # 서비스 계정 정책 필요
     echo "################################################ Deploy to GCP Cloud Function ################################################"
-    # /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
-    # for GCP_REGION in "${GCP_REGION_LIST[@]}"
-    # do
-    #     REGION=${GCP_REGION:-asia-northeast3}
-    #     /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
-    # done
+    /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
+    for GCP_REGION in "${GCP_REGION_LIST[@]}"
+    do
+        REGION=${GCP_REGION:-asia-northeast3}
+        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
+    done
 
     cd ../..
 }
