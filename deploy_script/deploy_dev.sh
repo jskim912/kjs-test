@@ -68,8 +68,9 @@ function gcp_cloud_function_deploy() {
     # mv package gcp
     # cd gcp
     mkdir package
-    mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
-    # mv "."/* "package"
+    find . ! -name package -exec mv '{}' package \;
+    #mv -v $(echo $(ls | grep -v package)) package/$(echo $(ls | grep -v package)) # not working in jenkins...
+    #mv ./* package"
 
     # deployment
     # 서비스 계정 정책 필요
