@@ -76,11 +76,8 @@ function gcp_cloud_function_deploy() {
     # mkdir gcp
     # mv package gcp
     # cd gcp
-    mkdir package
-    find . \
-        ! -name . \
-        ! -name package \
-        -exec mv '{}' package \;
+    #mkdir package
+    
     # filelist=$(echo $(ls | grep -v package))
     # for file in `($filelist)`
     # do 
