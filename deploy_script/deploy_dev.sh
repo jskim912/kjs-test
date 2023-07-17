@@ -64,7 +64,7 @@ function gcp_cloud_function_deploy() {
         ! -name .gitignore \
         ! -name README.md \
         ! -name .git \
-        -exec cp -r '{}' workspace/gcp \;
+        -exec cp '{}' workspace/gcp \;
     cd workspace/gcp
     
     # cp ../../requirements.txt .
