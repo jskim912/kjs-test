@@ -59,10 +59,10 @@ function gcp_cloud_function_deploy() {
     cp ../../application.py .
 
     # packaging
-    rm -rf package
     cd ..
     mv gcp package
     mkdir gcp
+    mv package gcp
     cd gcp
     # mv application.py package
     # mv requirements.txt package
