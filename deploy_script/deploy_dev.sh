@@ -60,17 +60,14 @@ function gcp_cloud_function_deploy() {
 
     # packaging
     rm -rf package
-    mkdir package
-    pwd
-    echo $(ls | grep -v package)
-    ls -al
-    
-    mv application.py package
-    mv requirements.txt package
-    mv main.py package
+    cd ..
+    mv gcp package
+    mkdir gcp
+    cd gcp
+    # mv application.py package
+    # mv requirements.txt package
+    # mv main.py package
     #mv -v $(echo $(ls | grep -v package)) package
-    ls -al
-    
 
     # deployment
     # 서비스 계정 정책 필요
