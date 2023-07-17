@@ -57,17 +57,17 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
-    # find . \
-    #     ! -name . \
-    #     ! -name deploy_script \
-    #     ! -name workspace \
-    #     ! -name .gitignore \
-    #     ! -name README.md \
-    #     ! -name .git \
-    #     -exec cp '{}' workspace/gcp \;
+    find . \
+        ! -name . \
+        ! -name deploy_script \
+        ! -name workspace \
+        ! -name .gitignore \
+        ! -name README.md \
+        ! -name .git \
+        -exec cp '{}' workspace/gcp/package \;
     cd workspace/gcp
-    cp ../../requirements.txt .
-    cp ../../application.py .
+    #cp ../../requirements.txt .
+    #cp ../../application.py .
 
     # packaging
     # cd ..
@@ -76,17 +76,18 @@ function gcp_cloud_function_deploy() {
     # mv package gcp
     # cd gcp
     mkdir package
-    # find . \
-    #     ! -name . \
-    #     ! -name package \
-    #     -exec mv '{}' package \;
-    filelist=$(echo $(ls | grep -v package))
-    for file in `($filelist)`
-    do 
-        echo "File List : $filelist"
-        echo "File : $file"
-        mv $file package/$file
-    done
+    find . \
+        ! -name . \
+        ! -name package \
+        -exec mv '{}' package \;
+    # filelist=$(echo $(ls | grep -v package))
+    # for file in `($filelist)`
+    # do 
+    #     echo "File List : $filelist"
+    #     echo "File : $file"
+    #     mv $file package/$file
+    # done
+
     # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
