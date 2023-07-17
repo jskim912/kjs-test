@@ -57,9 +57,17 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
+    find . \
+        ! -name . \
+        ! -name deploy_script \
+        ! -name workspace \
+        ! -name .gitignore \
+        ! -name README.md \
+        -exec mv '{}' workspace/gcp
     cd workspace/gcp
-    cp ../../requirements.txt .
-    cp ../../application.py .
+    
+    # cp ../../requirements.txt .
+    # cp ../../application.py .
 
     # packaging
     # cd ..
@@ -68,9 +76,11 @@ function gcp_cloud_function_deploy() {
     # mv package gcp
     # cd gcp
     mkdir package
-    find . ! -name package -exec mv '{}' package \;
-    #mv -v $(echo $(ls | grep -v package)) package/$(echo $(ls | grep -v package)) # not working in jenkins...
-    #mv ./* package"
+    find . \
+        ! -name . \
+        ! -name package \
+        -exec mv '{}' package \;
+    # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
     # 서비스 계정 정책 필요
