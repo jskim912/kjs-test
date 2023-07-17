@@ -57,15 +57,15 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
-    find . \
-        ! -name . \
-        ! -name deploy_script \
-        ! -name workspace \
-        ! -name .gitignore \
-        ! -name README.md \
-        ! -name .git \
-        -exec cp '{}' workspace/gcp \;
-    cd workspace/gcp
+    # find . \
+    #     ! -name . \
+    #     ! -name deploy_script \
+    #     ! -name workspace \
+    #     ! -name .gitignore \
+    #     ! -name README.md \
+    #     ! -name .git \
+    #     -exec cp '{}' workspace/gcp \;
+    # cd workspace/gcp
     
     # cp ../../requirements.txt .
     # cp ../../application.py .
@@ -81,6 +81,10 @@ function gcp_cloud_function_deploy() {
         ! -name . \
         ! -name package \
         -exec mv '{}' package \;
+    for file in ($(echo $(ls | grep -v package)))
+    do 
+        echo "File : ", $file
+    done
     # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
