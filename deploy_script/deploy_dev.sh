@@ -83,7 +83,7 @@ function gcp_cloud_function_deploy() {
     for file in $(echo $(ls | grep -v package))
     do 
         echo "File : $file"
-        mv $file package
+        mv $file package/$file
     done
     # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
