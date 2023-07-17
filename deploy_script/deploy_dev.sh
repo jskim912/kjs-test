@@ -81,7 +81,7 @@ function gcp_cloud_function_deploy() {
         ! -name . \
         ! -name package \
         -exec mv '{}' package \;
-    for file in ($(echo $(ls | grep -v package)))
+    for file in $(echo $(ls | grep -v package))
     do 
         echo "File : ", $file
     done
