@@ -57,7 +57,7 @@ function aws_lambda_deploy() {
 function gcp_cloud_function_deploy() {
     # init
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
-    mkdir workspace/gcp/package
+    mkdir -p workspace/gcp/package
     find . \
         -maxdepth 1 \
         ! -name . \
