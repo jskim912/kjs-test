@@ -64,10 +64,7 @@ function gcp_cloud_function_deploy() {
     mkdir gcp
     mv package gcp
     cd gcp
-    # mv application.py package
-    # mv requirements.txt package
-    # mv main.py package
-    #mv -v $(echo $(ls | grep -v package)) package
+    # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
     # 서비스 계정 정책 필요
@@ -81,11 +78,10 @@ function gcp_cloud_function_deploy() {
     cd ../..
 }
 
+
 for CLOUD in "${CLOUD_LIST[@]}"
 do
-    #####################################################################
     # AWS Lambda
-    #####################################################################
     if [ $CLOUD == "AWS" ] 
     then 
         IFS=","
@@ -93,15 +89,12 @@ do
 
         aws_lambda_deploy $AWS_REGION_LIST
 
-    #####################################################################
     # Google Cloud Function
-    #####################################################################
     elif [ $CLOUD == "GCP" ]
     then
         IFS=","
         GCP_REGION_LIST=($2)
 
         gcp_cloud_function_deploy $GCP_REGION_LIST
-
     fi
 done
