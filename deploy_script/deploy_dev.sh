@@ -54,6 +54,7 @@ function aws_lambda_deploy() {
 
 function gcp_cloud_function_deploy() {
     # init
+    echo "-"*50
     cd workspace/gcp
     cp ../../requirements.txt .
     cp ../../application.py .
