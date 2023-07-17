@@ -76,13 +76,14 @@ function gcp_cloud_function_deploy() {
     # mv package gcp
     # cd gcp
     mkdir package
-    find . \
-        ! -name . \
-        ! -name package \
-        -exec mv '{}' package \;
+    # find . \
+    #     ! -name . \
+    #     ! -name package \
+    #     -exec mv '{}' package \;
     for file in $(echo $(ls | grep -v package))
     do 
         echo "File : ", $file
+        mv $file package
     done
     # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
