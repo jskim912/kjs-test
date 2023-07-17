@@ -13,7 +13,7 @@ FUNC_NAME="data-collection-parser-dev"
 
 function aws_lambda_deploy() {
     # init
-    echo "################################################ Packaging for AWS Lambda Deploy ################################################"
+    echo "################################################ Packaging for AWS Lambda Deployment ################################################"
     cd workspace/aws
     cp ../../requirements.txt .
     cp ../../application.py .
@@ -35,7 +35,7 @@ function aws_lambda_deploy() {
 
     # deployment
     # 서비스 역할 정책 필요
-    echo "################################################ AWS Lambda Deploy ################################################"
+    echo "################################################ Deploy to AWS Lambda ################################################"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         REGION=${AWS_REGION:-ap-northeast-2}
@@ -56,22 +56,23 @@ function aws_lambda_deploy() {
 
 function gcp_cloud_function_deploy() {
     # init
-    echo "################################################ Packaging for GCP Cloud Function Deploy ################################################"
+    echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
     cd workspace/gcp
     cp ../../requirements.txt .
     cp ../../application.py .
 
     # packaging
-    cd ..
-    mv gcp package
-    mkdir gcp
-    mv package gcp
-    cd gcp
-    # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
+    # cd ..
+    # mv gcp package
+    # mkdir gcp
+    # mv package gcp
+    # cd gcp
+    mkdir package
+    mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
     # 서비스 계정 정책 필요
-    echo "################################################ GCP Cloud Function Deploy ################################################"
+    echo "################################################ Deploy to GCP Cloud Function ################################################"
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     for GCP_REGION in "${GCP_REGION_LIST[@]}"
     do
