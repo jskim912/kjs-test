@@ -47,9 +47,9 @@ function aws_lambda_deploy() {
         then 
             # PATH 설정 필요
             createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
-            echo -e "AWS Lambda Function created : \n$createFunc"
+            echo -e "\nAWS Lambda Function created : \n$createFunc"
         else
-            echo -e "AWS Lambda Function Code updated : \n$updateFunc"
+            echo -e "\nAWS Lambda Function Code updated : \n$updateFunc"
         fi
     done
 
@@ -81,6 +81,7 @@ function gcp_cloud_function_deploy() {
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     for GCP_REGION in "${GCP_REGION_LIST[@]}"
     do
+        echo ""
         # PATH 설정 필요
         /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
     done
