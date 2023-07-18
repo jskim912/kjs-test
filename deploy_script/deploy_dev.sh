@@ -6,10 +6,8 @@ fi
 
 
 CLOUD_LIST=$1
-FUNC_NAME="data-collection-parser-dev"
-
 # prod vs dev
-
+FUNC_NAME="data-collection-parser-dev"
 
 function aws_lambda_deploy() {
     # init
@@ -22,7 +20,8 @@ function aws_lambda_deploy() {
     python3 -m pip install --upgrade pip
     pip3 install virtualenv
 
-    /opt/homebrew/bin/virtualenv ./venv -p /opt/homebrew/bin/python3.10 # PATH 설정 필요
+    # PATH 설정 필요
+    /opt/homebrew/bin/virtualenv ./venv -p /opt/homebrew/bin/python3.10
     source ./venv/bin/activate
     pip3 install -r requirements.txt
 
@@ -38,12 +37,12 @@ function aws_lambda_deploy() {
     echo "################################################ Deploy to AWS Lambda ################################################"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
-        REGION=${AWS_REGION:-ap-northeast-2}
-    
-        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${REGION} --region $REGION --zip-file fileb://package.zip 2> /dev/null)
+        # PATH 설정 필요
+        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${AWS_REGION} --region $AWS_REGION --zip-file fileb://package.zip 2> /dev/null)
 
         if [ -z "$updateFunc" ]
         then 
+            # PATH 설정 필요
             createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
             echo -e "AWS Lambda Function created : \n$createFunc"
         else
@@ -55,7 +54,7 @@ function aws_lambda_deploy() {
 }
 
 function gcp_cloud_function_deploy() {
-    # init
+    # # packaging
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
     mkdir -p workspace/gcp/package
     find . \
@@ -69,35 +68,16 @@ function gcp_cloud_function_deploy() {
         -exec cp -rv '{}' workspace/gcp/package \;
     cd workspace/gcp
     mv main.py package
-    #cp ../../requirements.txt .
-    #cp ../../application.py .
-
-    # packaging
-    # cd ..
-    # mv gcp package
-    # mkdir gcp
-    # mv package gcp
-    # cd gcp
-    #mkdir package
-    
-    # filelist=$(echo $(ls | grep -v package))
-    # for file in `($filelist)`
-    # do 
-    #     echo "File List : $filelist"
-    #     echo "File : $file"
-    #     mv $file package/$file
-    # done
-
-    # mv -v $(echo $(ls | grep -v package)) package # not working in jenkins...
 
     # deployment
     # 서비스 계정 정책 필요
     echo "################################################ Deploy to GCP Cloud Function ################################################"
+    # PATH 설정 필요
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
     for GCP_REGION in "${GCP_REGION_LIST[@]}"
     do
-        REGION=${GCP_REGION:-asia-northeast3}
-        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${REGION} --trigger-http --runtime=python310 --region=$REGION --source=package --entry-point=entry
+        # PATH 설정 필요
+        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
     done
 
     cd ../..
