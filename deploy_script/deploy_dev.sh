@@ -46,7 +46,7 @@ function aws_lambda_deploy() {
         if [ -z "$updateFunc" ]
         then 
             # PATH 설정 필요
-            createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $REGION --zip-file fileb://package.zip)
+            createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
             echo -e "AWS Lambda Function created : \n$createFunc"
         else
             echo -e "AWS Lambda Function Code updated : \n$updateFunc"
