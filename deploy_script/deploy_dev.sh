@@ -57,7 +57,7 @@ function aws_lambda_deploy() {
 }
 
 function gcp_cloud_function_deploy() {
-    # # packaging
+    # packaging
     echo ""
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
     mkdir -p workspace/gcp/package
