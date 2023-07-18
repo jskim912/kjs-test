@@ -11,6 +11,7 @@ FUNC_NAME="data-collection-parser-dev"
 
 function aws_lambda_deploy() {
     # init
+    echo ""
     echo "################################################ Packaging for AWS Lambda Deployment ################################################"
     cd workspace/aws
     cp ../../requirements.txt .
@@ -34,6 +35,7 @@ function aws_lambda_deploy() {
 
     # deployment
     # 서비스 역할 정책 필요
+    echo ""
     echo "################################################ Deploy to AWS Lambda ################################################"
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
@@ -55,6 +57,7 @@ function aws_lambda_deploy() {
 
 function gcp_cloud_function_deploy() {
     # # packaging
+    echo ""
     echo "################################################ Packaging for GCP Cloud Function Deployment ################################################"
     mkdir -p workspace/gcp/package
     find . \
@@ -71,6 +74,7 @@ function gcp_cloud_function_deploy() {
 
     # deployment
     # 서비스 계정 정책 필요
+    echo ""
     echo "################################################ Deploy to GCP Cloud Function ################################################"
     # PATH 설정 필요
     /Users/jskim/google-cloud-sdk/bin/gcloud auth activate-service-account 363375785641-compute@developer.gserviceaccount.com --key-file="/Users/jskim/gcp-363375785641-compute-key.json"
