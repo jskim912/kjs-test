@@ -19,7 +19,7 @@ function aws_lambda_deploy() {
     cp ../../application.py .
 
     # install dependencies
-    python3 -m pip install --upgrade pip
+    /opt/homebrew/bin/python3.10 -m pip install --upgrade pip
     # pip3 install virtualenv
 
     # PATH 설정 필요
