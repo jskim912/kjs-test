@@ -3,9 +3,9 @@ if [ $# -ne 5 ]
 then
     echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_project> <gcp_region_array>"
     exit -1
-elif [ "$1" == "NotDeploy" ] && [ "$3" == "NotDeploy" ]
+elif [ $1 == "NotDeploy" ] && [ $3 == "NotDeploy" ]
 then
-    echo "Select at least 1 cloud platform."
+    echo "Select at least 1 cloud platform!"
     exit -1
 fi
 
