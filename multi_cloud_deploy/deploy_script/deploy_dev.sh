@@ -1,5 +1,9 @@
 #!/bin/bash
-echo -e "argument: $#"
+echo -e "argument1: $1"
+echo -e "argument2: $2"
+echo -e "argument3: $3"
+echo -e "argument4: $4"
+echo -e "argument5: $5"
 
 if [ $# -ne 5 ] 
 then
