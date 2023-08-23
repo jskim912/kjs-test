@@ -1,12 +1,14 @@
 #!/bin/bash
-if [ $# -ne 2 ] 
+if [ $# -ne 4 ] 
 then
-    echo "Usage: deploy.sh <cloud_platform_array> <region_array>"
+    echo "Usage: deploy.sh AWS <aws_region_array> GCP <gcp_region_array>"
     exit -1
 fi
 
+# env
+SCRIPT_PATH=`realpath "$0"`
+SCRIPT_DIR=`dirname "$SCRIPT_PATH"`
 
-CLOUD_LIST=$1
 # prod vs dev
 FUNC_NAME="data-collection-parser-dev"
 
@@ -20,11 +22,11 @@ function aws_lambda_deploy() {
 
     # install dependencies
     # PATH 설정 필요 
-    /opt/homebrew/bin/python3.10 -m pip install --upgrade pip
-    /opt/homebrew/bin/python3.10 -m venv venv
+    python3 -m pip install --upgrade pip
+    python3 -m venv venv
     source ./venv/bin/activate
     pip3 install -r requirements.txt
-
+    
     # packaging
     cd ./venv/lib/python3.10/site-packages
     zip -r ../../../../package.zip .
@@ -39,19 +41,17 @@ function aws_lambda_deploy() {
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         # PATH 설정 필요
-        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${AWS_REGION} --region $AWS_REGION --zip-file fileb://package.zip 2> /dev/null)
+        updateFunc=$(aws lambda update-function-code --function-name ${FUNC_NAME}-${AWS_REGION} --region $AWS_REGION --zip-file fileb://package.zip 2> /dev/null)
 
         if [ -z "$updateFunc" ]
         then 
             # PATH 설정 필요
-            createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
+            createFunc=$(aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
             echo -e "\nAWS Lambda Function created : \n$createFunc"
         else
             echo -e "\nAWS Lambda Function Code updated : \n$updateFunc"
         fi
     done
-
-    cd ../..
 }
 
 function gcp_cloud_function_deploy() {
@@ -81,29 +81,31 @@ function gcp_cloud_function_deploy() {
     do
         echo ""
         # PATH 설정 필요
-        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
+        gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry
     done
-
-    cd ../..
 }
 
+##################################
+############## Main ##############
+##################################
 
-for CLOUD in "${CLOUD_LIST[@]}"
-do
-    # AWS Lambda
-    if [ $CLOUD == "AWS" ] 
-    then 
-        IFS=","
-        AWS_REGION_LIST=($2)
+# AWS Lambda
+if [ $1 == "AWS" ] 
+then 
+    cd $SCRIPT_DIR/..
 
-        aws_lambda_deploy $AWS_REGION_LIST
+    IFS=","
+    AWS_REGION_LIST=($2)
 
-    # Google Cloud Function
-    elif [ $CLOUD == "GCP" ]
-    then
-        IFS=","
-        GCP_REGION_LIST=($2)
+    aws_lambda_deploy $AWS_REGION_LIST
 
-        gcp_cloud_function_deploy $GCP_REGION_LIST
-    fi
-done
+# Google Cloud Function
+elif [ $3 == "GCP" ]
+then
+    cd $SCRIPT_DIR/..
+
+    IFS=","
+    GCP_REGION_LIST=($4)
+
+    gcp_cloud_function_deploy $GCP_REGION_LIST
+fi
