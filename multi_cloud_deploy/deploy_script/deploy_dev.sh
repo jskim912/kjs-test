@@ -80,7 +80,7 @@ function gcp_cloud_function_deploy() {
     do
         echo ""
         # PATH 설정 필요
-        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry --project=storelink-datas
+        /Users/jskim/google-cloud-sdk/bin/gcloud functions deploy ${FUNC_NAME}-${GCP_REGION} --trigger-http --runtime=python310 --region=$GCP_REGION --source=package --entry-point=entry --project=$GCP_PROJECT
     done
 }
 
@@ -105,7 +105,8 @@ then
     cd $SCRIPT_DIR/..
 
     IFS=","
-    GCP_REGION_LIST=($4)
+    GCP_PROJECT=$4
+    GCP_REGION_LIST=($5)
 
-    gcp_cloud_function_deploy $GCP_REGION_LIST
+    gcp_cloud_function_deploy $GCP_PROJECT $GCP_REGION_LIST
 fi
