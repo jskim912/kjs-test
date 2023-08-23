@@ -1,11 +1,5 @@
 #!/bin/bash
-echo -e "argument1: $1"
-echo -e "argument2: $2"
-echo -e "argument3: $3"
-echo -e "argument4: $4"
-echo -e "argument5: $5"
-
-if [ $# -le 2 ] 
+if [ $# -le 5 ] 
 then
     echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_project> <gcp_region_array>"
     exit -1
