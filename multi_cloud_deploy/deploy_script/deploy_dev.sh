@@ -1,4 +1,6 @@
 #!/bin/bash
+echo -e "argument: $#"
+
 if [ $# -ne 5 ] 
 then
     echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_project> <gcp_region_array>"
