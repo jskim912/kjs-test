@@ -29,10 +29,12 @@ function aws_lambda_deploy() {
     
     # packaging
     cd ./venv/lib/python3.10/site-packages
-    zip -r ../../../../package.zip .
+    echo "zip start."
+    zip -q -r ../../../../package.zip .
     cd ../../../../
-    zip -r package.zip application.py
-    zip -r package.zip main.py
+    zip -q -r package.zip application.py
+    zip -q -r package.zip main.py
+    echo "zip end."
 
     # deployment
     # 서비스 역할 정책 필요
