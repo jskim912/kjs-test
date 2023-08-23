@@ -97,6 +97,7 @@ then
     AWS_REGION_LIST=($2)
 
     aws_lambda_deploy $AWS_REGION_LIST
+fi
 
 # Google Cloud Function Deploy
 if [ $3 == "Deploy" ]
