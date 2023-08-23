@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# -ne 5 ] || [$1 == "NotDeploy" && $3 == "NotDeploy"]
+if [ $# -ne 5 ] || [$1 -ne "NotDeploy" && $3 -ne "NotDeploy"]
 then
     echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_project> <gcp_region_array>"
     exit -1
