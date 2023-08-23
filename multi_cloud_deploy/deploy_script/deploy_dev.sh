@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -ne 4 ] 
 then
-    echo "Usage: deploy.sh AWS <aws_region_array> GCP <gcp_region_array>"
+    echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_region_array>"
     exit -1
 fi
 
@@ -88,8 +88,8 @@ function gcp_cloud_function_deploy() {
 ############## Main ##############
 ##################################
 
-# AWS Lambda
-if [ $1 == "AWS" ] 
+# AWS Lambda Deploy
+if [ $1 == "Deploy" ] 
 then 
     cd $SCRIPT_DIR/..
 
@@ -98,8 +98,8 @@ then
 
     aws_lambda_deploy $AWS_REGION_LIST
 
-# Google Cloud Function
-elif [ $3 == "GCP" ]
+# Google Cloud Function Deploy
+if [ $3 == "Deploy" ]
 then
     cd $SCRIPT_DIR/..
 
