@@ -21,7 +21,10 @@ function aws_lambda_deploy() {
     cp ../../application.py .
 
     # install dependencies 
+    which python3
+    which python3.10
     python3.10 -m venv .venv
+    ls -al
     source .venv/bin/activate
     pip install --upgrade pip
     pip install -r requirements.txt
