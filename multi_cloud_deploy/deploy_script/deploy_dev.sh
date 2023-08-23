@@ -20,21 +20,18 @@ function aws_lambda_deploy() {
     cp ../../requirements.txt .
     cp ../../application.py .
 
-    # install dependencies
-    # PATH 설정 필요 
-    python3 -m pip install --upgrade pip
-    python3 -m venv venv
-    source ./venv/bin/activate
-    pip3 install -r requirements.txt
+    # install dependencies 
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install --upgrade pip
+    pip install -r requirements.txt
     
     # packaging
-    cd ./venv/lib/python3.10/site-packages
-    echo "zip start."
-    zip -q -r ../../../../package.zip .
-    cd ../../../../
+    echo "Zip start."
+    zip -q -r package.zip .venv/lib/python3/site-packages
     zip -q -r package.zip application.py
     zip -q -r package.zip main.py
-    echo "zip end."
+    echo "Zip end."
 
     # deployment
     # 서비스 역할 정책 필요
