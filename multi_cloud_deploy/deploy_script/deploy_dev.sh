@@ -22,7 +22,6 @@ function aws_lambda_deploy() {
 
     # install dependencies 
     python3 -m venv .venv
-    ls -al
     source .venv/bin/activate
     pip install --upgrade pip
     pip install -r requirements.txt
@@ -32,7 +31,7 @@ function aws_lambda_deploy() {
     zip -q -r package.zip .venv/lib/python3.9/site-packages
     zip -q -r package.zip application.py
     zip -q -r package.zip main.py
-    echo "Zip end."
+    echo "Zip finished."
 
     # deployment
     # 서비스 역할 정책 필요
@@ -41,12 +40,12 @@ function aws_lambda_deploy() {
     for AWS_REGION in "${AWS_REGION_LIST[@]}"
     do
         # PATH 설정 필요
-        updateFunc=$(aws lambda update-function-code --function-name ${FUNC_NAME}-${AWS_REGION} --region $AWS_REGION --zip-file fileb://package.zip 2> /dev/null)
+        updateFunc=$(/usr/local/bin/aws lambda update-function-code --function-name ${FUNC_NAME}-${AWS_REGION} --region $AWS_REGION --zip-file fileb://package.zip 2> /dev/null)
 
         if [ -z "$updateFunc" ]
         then 
             # PATH 설정 필요
-            createFunc=$(aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
+            createFunc=$(/usr/local/bin/aws lambda create-function --function-name ${FUNC_NAME}-${AWS_REGION} --runtime python3.10 --role arn:aws:iam::686449765408:role/storelink --handler main.entry --region $AWS_REGION --zip-file fileb://package.zip)
             echo -e "\nAWS Lambda Function created : \n$createFunc"
         else
             echo -e "\nAWS Lambda Function Code updated : \n$updateFunc"
