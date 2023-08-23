@@ -1,7 +1,7 @@
 #!/bin/bash
-if [ $# -ne 4 ] 
+if [ $# -ne 5 ] 
 then
-    echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_region_array>"
+    echo "Usage: deploy.sh <aws_deploy_option> <aws_region_array> <gcp_deploy_option> <gcp_project> <gcp_region_array>"
     exit -1
 fi
 
