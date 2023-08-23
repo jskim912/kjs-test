@@ -21,9 +21,7 @@ function aws_lambda_deploy() {
     cp ../../application.py .
 
     # install dependencies 
-    which python3
-    which python3.10
-    python3.10 -m venv .venv
+    python3 -m venv .venv
     ls -al
     source .venv/bin/activate
     pip install --upgrade pip
@@ -31,7 +29,7 @@ function aws_lambda_deploy() {
     
     # packaging
     echo "Zip start."
-    zip -q -r package.zip .venv/lib/python3.10/site-packages
+    zip -q -r package.zip .venv/lib/python3.9/site-packages
     zip -q -r package.zip application.py
     zip -q -r package.zip main.py
     echo "Zip end."
